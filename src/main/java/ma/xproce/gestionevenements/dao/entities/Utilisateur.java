@@ -1,10 +1,8 @@
 package ma.xproce.gestionevenements.dao.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,8 +13,18 @@ import lombok.*;
 public class Utilisateur {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uid;
-    private String name;
-    private String username;
-    private String password;
+    private String nom;
+    private String prenom;
+    @Column(unique = true)
+    private String email;
+    @Column(unique = true)
+    private String telephone;
+    private String motDePasse;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(unique = true)
+    private String signatureImageUrl;
+    private LocalDateTime dateExpirationRole;
 }

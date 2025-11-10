@@ -15,7 +15,6 @@ public class Ressource {
     private String nom;
     private boolean disponible;
     @ManyToOne
-    @JoinColumn(name="categorie_id")
     private Category categorie;
 
 }
