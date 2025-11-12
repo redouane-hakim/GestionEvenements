@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Category {
+public class Categorie{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cid;
     private String nom;

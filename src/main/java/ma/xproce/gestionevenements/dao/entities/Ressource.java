@@ -15,6 +15,6 @@ public class Ressource {
     private String nom;
     private boolean disponible;
     @ManyToOne
-    private Category categorie;
+    private Categorie categorie;
 
 }
