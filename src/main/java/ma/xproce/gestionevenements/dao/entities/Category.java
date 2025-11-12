@@ -14,7 +14,7 @@ import java.util.List;
 public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cid;
-    private String name;
+    private String nom;
     private String description;
     @OneToMany(mappedBy = "categorie",cascade= CascadeType.ALL)
     private List<Ressource> ressources;
