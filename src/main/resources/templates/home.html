@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Accueil - GestionEvenements</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body>
+<header>
+    <h1>GestionEvenements</h1>
+    <nav>
+        <a th:href="@{/}">Accueil</a> |
+        <a th:href="@{/admin}">Administration</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Évènements</h2>
+    <div th:if="${#lists.isEmpty(evenements)}">
+        <p>Aucun évènement trouvé.</p>
+    </div>
+    <ul th:if="${not #lists.isEmpty(evenements)}">
+        <li th:each="ev : ${evenements}">
+            <h3 th:text="${ev.titre}">Titre</h3>
+            <p th:text="${ev.categorie}">Catégorie</p>
+            <p>
+                <strong>Lieu :</strong> <span th:text="${ev.lieu}">Lieu</span>
+                &nbsp;|&nbsp;
+                <strong>Du :</strong> <span th:text="${ev.dateDebut}">dateDebut</span>
+                &nbsp;au&nbsp;
+                <span th:text="${ev.dateFin}">dateFin</span>
+            </p>
+            <p th:text="${#strings.abbreviate(ev.description, 200)}">Description...</p>
+            <p><a th:href="@{'/evenement/' + ${ev.eid}}">Voir</a></p>
+        </li>
+    </ul>
+</main>
+
+<footer>
+    <p>&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}">2026</span> GestionEvenements</p>
+</footer>
+</body>
+</html>

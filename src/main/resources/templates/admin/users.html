@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Admin - Utilisateurs</title>
+</head>
+<body>
+<header>
+    <h1>Utilisateurs (admin)</h1>
+    <nav>
+        <a th:href="@{/admin}">Dashboard</a> |
+        <a th:href="@{/}">Site</a>
+    </nav>
+</header>
+
+<main>
+    <table border="1" cellpadding="6">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${utilisateurs}">
+            <td th:text="${u.uid}">1</td>
+            <td th:text="${u.nom}">Nom</td>
+            <td th:text="${u.prenom}">Prénom</td>
+            <td th:text="${u.email}">email</td>
+            <td th:text="${u.role}">role</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

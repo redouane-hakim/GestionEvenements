@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Admin - Dashboard</title>
+</head>
+<body>
+<header>
+    <h1>Administration</h1>
+    <nav>
+        <a th:href="@{/admin}">Dashboard</a> |
+        <a th:href="@{/admin/evenements}">Évènements</a> |
+        <a th:href="@{/admin/utilisateurs}">Utilisateurs</a> |
+        <a th:href="@{/}">Retour site</a>
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h2>Résumé</h2>
+        <ul>
+            <li>Nombre d'évènements : <span th:text="${eventsCount}">0</span></li>
+            <li>Nombre d'utilisateurs : <span th:text="${usersCount}">0</span></li>
+            <li>Nombre de ressources : <span th:text="${ressourcesCount}">0</span></li>
+        </ul>
+    </section>
+</main>
+
+<footer>
+    <p>Administration - GestionEvenements</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Admin - Évènements</title>
+</head>
+<body>
+<header>
+    <h1>Évènements (admin)</h1>
+    <nav>
+        <a th:href="@{/admin}">Dashboard</a> |
+        <a th:href="@{/}">Site</a>
+    </nav>
+</header>
+
+<main>
+    <table border="1" cellpadding="6">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Catégorie</th>
+            <th>Lieu</th>
+            <th>Début</th>
+            <th>Fin</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ev : ${evenements}">
+            <td th:text="${ev.eid}">1</td>
+            <td th:text="${ev.titre}">Titre</td>
+            <td th:text="${ev.categorie}">Catégorie</td>
+            <td th:text="${ev.lieu}">Lieu</td>
+            <td th:text="${ev.dateDebut}">dateDebut</td>
+            <td th:text="${ev.dateFin}">dateFin</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
