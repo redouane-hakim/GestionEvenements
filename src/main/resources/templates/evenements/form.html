@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Soumettre une demande</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+</head>
+<body>
+<header>
+    <h1>Soumettre une demande</h1>
+    <nav>
+        <a th:href="@{/}">Accueil</a>
+    </nav>
+</header>
+
+<main>
+    <form th:action="@{/demande}" th:object="${demandeForm}" method="post">
+        <div>
+            <label for="nomOrganisateur">Nom organisateur</label>
+            <input id="nomOrganisateur" th:field="*{nomOrganisateur}" required/>
+        </div>
+        <div>
+            <label for="prenomOrganisateur">Prénom organisateur</label>
+            <input id="prenomOrganisateur" th:field="*{prenomOrganisateur}" required/>
+        </div>
+        <div>
+            <label for="emailOrganisateur">Email</label>
+            <input id="emailOrganisateur" th:field="*{emailOrganisateur}" type="email" required/>
+        </div>
+        <div>
+            <label for="telephoneOrganisateur">Téléphone</label>
+            <input id="telephoneOrganisateur" th:field="*{telephoneOrganisateur}"/>
+        </div>
+        <div>
+            <label for="nomOrganisation">Nom de l'organisation</label>
+            <input id="nomOrganisation" th:field="*{nomOrganisation}" />
+        </div>
+        <div>
+            <label for="typeEvenement">Type d'évènement</label>
+            <input id="typeEvenement" th:field="*{typeEvenement}" />
+        </div>
+        <div>
+            <label for="intitule">Intitulé</label>
+            <input id="intitule" th:field="*{intitule}" />
+        </div>
+        <div>
+            <label for="description">Description</label>
+            <textarea id="description" th:field="*{description}" rows="6"></textarea>
+        </div>
+        <div>
+            <button type="submit">Soumettre la demande</button>
+        </div>
+    </form>
+</main>
+
+<footer>
+    <p>GestionEvenements</p>
+</footer>
+</body>
+</html>

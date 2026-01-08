@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title th:text="${evenement.titre}">Détail évènement</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body>
+<header>
+    <h1 th:text="${evenement.titre}">Titre évènement</h1>
+    <nav>
+        <a th:href="@{/}">Accueil</a> |
+        <a th:href="@{/admin}">Administration</a>
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h2>Informations</h2>
+        <p><strong>Catégorie :</strong> <span th:text="${evenement.categorie}">Catégorie</span></p>
+        <p><strong>Lieu :</strong> <span th:text="${evenement.lieu}">Lieu</span></p>
+        <p><strong>Dates :</strong> <span th:text="${evenement.dateDebut}">début</span> — <span th:text="${evenement.dateFin}">fin</span></p>
+        <div>
+            <h3>Description</h3>
+            <div th:utext="${evenement.description}">Description</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Questions / FAQ</h2>
+        <div th:if="${#lists.isEmpty(questions)}">
+            <p>Aucune question posée pour le moment.</p>
+        </div>
+        <ul th:if="${not #lists.isEmpty(questions)}">
+            <li th:each="q : ${questions}">
+                <p><strong th:text="${q.auteurNom}">Auteur</strong> — <span th:text="${#dates.format(q.dateQuestion, 'yyyy-MM-dd HH:mm')}">date</span></p>
+                <p th:text="${q.contenu}">Contenu</p>
+                <div th:if="${q.reponse != null}">
+                    <p><em>Réponse :</em> <span th:text="${q.reponse}">Réponse</span></p>
+                    <p><small>par <span th:text="${q.repondeur != null ? q.repondeur.nom : 'Responsable'}">Répondeur</span></small></p>
+                </div>
+                <hr/>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Poser une question</h2>
+        <div th:if="${message}">
+            <p th:text="${message}" style="color:green"></p>
+        </div>
+        <form th:action="@{'/evenement/' + ${evenement.eid} + '/question'}" th:object="${questionForm}" method="post">
+            <div>
+                <label for="auteurNom">Votre nom</label>
+                <input type="text" id="auteurNom" th:field="*{auteurNom}" required/>
+            </div>
+            <div>
+                <label for="contenu">Question</label>
+                <textarea id="contenu" th:field="*{contenu}" rows="5" required></textarea>
+            </div>
+            <div>
+                <button type="submit">Envoyer la question</button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}">2026</span> GestionEvenements</p>
+</footer>
+</body>
+</html>
