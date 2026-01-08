@@ -7,14 +7,13 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Participant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int pid;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long pid;
 
     private String nom;
     private String prenom;

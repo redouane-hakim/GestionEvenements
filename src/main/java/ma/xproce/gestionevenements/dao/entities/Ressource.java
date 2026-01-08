@@ -5,16 +5,17 @@ import lombok.*;
 
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Ressource {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int rid;
+    private Long rid;
+
     private String nom;
-    private boolean disponible;
+    private boolean disponible = true;
+
     @ManyToOne
     private Categorie categorie;
-
 }

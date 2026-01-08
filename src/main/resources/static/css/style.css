@@ -1,0 +1,38 @@
+:root{
+  --grad-1: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  --grad-2: linear-gradient(135deg, #22c55e 0%, #0ea5e9 100%);
+}
+
+body{
+  background: #fff;
+}
+
+.btn-scale{
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-scale:hover{
+  transform: scale(1.03);
+}
+
+.hero{
+  background: var(--grad-1);
+  color: white;
+  border-radius: 1.5rem;
+}
+
+.card-hover{
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.card-hover:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.badge-grad{
+  background: var(--grad-2);
+}
+
+.footer{
+  background: #0f172a;
+  color: #e2e8f0;
+}

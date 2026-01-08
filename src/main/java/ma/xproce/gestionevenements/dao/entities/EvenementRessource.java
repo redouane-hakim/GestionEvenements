@@ -1,19 +1,18 @@
 package ma.xproce.gestionevenements.dao.entities;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class EvenementRessource {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int eRid;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long eRid;
 
     private Double quantite;
     private String unite;

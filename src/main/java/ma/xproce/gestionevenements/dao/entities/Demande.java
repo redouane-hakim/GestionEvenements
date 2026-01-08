@@ -7,19 +7,19 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Demande {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int did;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long did;
 
     private String nomOrganisateur;
     private String prenomOrganisateur;
     private String emailOrganisateur;
     private String telephoneOrganisateur;
+
     private String nomOrganisation;
     private String typeEvenement;
     private String intitule;
@@ -28,6 +28,7 @@ public class Demande {
     private String description;
 
     private String signatureOrganisateurImageUrl;
+
     private LocalDateTime dateDemande = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)

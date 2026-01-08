@@ -7,14 +7,13 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Question {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int qid;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long qid;
 
     private String auteurNom;
 
@@ -22,8 +21,10 @@ public class Question {
     private String contenu;
 
     private LocalDateTime dateQuestion = LocalDateTime.now();
+
     @Lob
     private String reponse;
+
     private LocalDateTime dateReponse;
 
     @ManyToOne

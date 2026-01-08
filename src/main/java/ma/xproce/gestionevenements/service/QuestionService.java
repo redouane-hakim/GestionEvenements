@@ -1,17 +1,14 @@
 package ma.xproce.gestionevenements.service;
 
-import ma.xproce.gestionevenements.dao.entities.Evenement;
 import ma.xproce.gestionevenements.dao.entities.Question;
-import org.springframework.stereotype.Service;
+import ma.xproce.gestionevenements.dao.entities.Utilisateur;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public interface QuestionService {
-    Question save(Question question);
-    Question update(Question question);
-    void deleteById(int id);
-    Optional<Question> findById(int id);
-    List<Question> findByEvenement(Evenement evenement);
+    Question save(Question q);
+    List<Question> findByEvenement(Long eid);
+    Optional<Question> findById(Long id);
+    Question repondre(Long qid, String reponse, Utilisateur repondeur);
 }
