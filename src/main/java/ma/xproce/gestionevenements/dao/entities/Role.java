@@ -1,6 +1,6 @@
 package ma.xproce.gestionevenements.dao.entities;
 
 public enum Role {
-    responsable,
-    organisateur
+    RESPONSABLE,    // MAJUSCULE
+    ORGANISATEUR    // MAJUSCULE
 }

@@ -1,16 +1,16 @@
 package ma.xproce.gestionevenements.service;
 
-import ma.xproce.gestionevenements.dao.entities.Demande;
-import ma.xproce.gestionevenements.dao.entities.Utilisateur;
+import ma.xproce.gestionevenements.dto.DemandeDto;
+import ma.xproce.gestionevenements.dto.UtilisateurDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface DemandeService {
-    Demande creer(Demande demande);
-    List<Demande> findAll();
-    List<Demande> findByOrganisateurEmail(String email);
-    Optional<Demande> findById(Long id);
-    Demande accepter(Long id, Utilisateur validateur);
-    Demande refuser(Long id, Utilisateur validateur);
+    DemandeDto creer(DemandeDto demande);
+    List<DemandeDto> findAll();
+    List<DemandeDto> findByOrganisateurEmail(String email);
+    Optional<DemandeDto> findById(Long id);
+    DemandeDto accepter(Long id, UtilisateurDto validateur);
+    DemandeDto refuser(Long id, UtilisateurDto validateur);
 }

@@ -1,10 +1,10 @@
 package ma.xproce.gestionevenements.service;
 
-import ma.xproce.gestionevenements.dao.entities.Participant;
+import ma.xproce.gestionevenements.dto.ParticipantDto;
 
 import java.util.List;
 
 public interface ParticipantService {
-    Participant save(Participant p);
-    List<Participant> findByEvenement(Long eid);
+    ParticipantDto save(ParticipantDto p);
+    List<ParticipantDto> findByEvenement(Long eid);
 }

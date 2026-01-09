@@ -30,7 +30,7 @@ public class DataInitializer {
                     .email("admin@demo.com")
                     .telephone("0600000000")
                     .motDePasse(passwordEncoder.encode("admin123"))
-                    .role(Role.responsable)
+                    .role(Role.RESPONSABLE)
                     .signatureImageUrl("https://example.com/sign-admin.png")
                     .build();
 
@@ -40,7 +40,7 @@ public class DataInitializer {
                     .email("org@demo.com")
                     .telephone("0611111111")
                     .motDePasse(passwordEncoder.encode("org123"))
-                    .role(Role.organisateur)
+                    .role(Role.ORGANISATEUR)
                     .signatureImageUrl("https://example.com/sign-org.png")
                     .build();
 

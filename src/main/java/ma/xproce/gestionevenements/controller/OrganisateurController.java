@@ -1,9 +1,9 @@
 package ma.xproce.gestionevenements.controller;
 
 import lombok.RequiredArgsConstructor;
-import ma.xproce.gestionevenements.dao.entities.Demande;
-import ma.xproce.gestionevenements.dao.entities.Evenement;
 import ma.xproce.gestionevenements.dao.entities.Utilisateur;
+import ma.xproce.gestionevenements.dto.DemandeDto;
+import ma.xproce.gestionevenements.dto.EvenementDto;
 import ma.xproce.gestionevenements.security.UserDetailsImpl;
 import ma.xproce.gestionevenements.service.DemandeService;
 import ma.xproce.gestionevenements.service.EvenementService;
@@ -32,19 +32,21 @@ public class OrganisateurController {
 
     @GetMapping("/demande")
     public String demandeForm(Model model) {
-        model.addAttribute("demande", new Demande());
+        model.addAttribute("demande", new DemandeDto());
         return "org/demande-form";
     }
 
     @PostMapping("/demande")
-    public String submitDemande(@ModelAttribute Demande demande, @AuthenticationPrincipal UserDetailsImpl principal) {
+    public String submitDemande(@ModelAttribute DemandeDto demande, @AuthenticationPrincipal UserDetailsImpl principal) {
         Utilisateur u = principal.getUtilisateur();
+
         // remplir infos organisateur depuis le compte connecté (traçabilité)
         demande.setNomOrganisateur(u.getNom());
         demande.setPrenomOrganisateur(u.getPrenom());
         demande.setEmailOrganisateur(u.getEmail());
         demande.setTelephoneOrganisateur(u.getTelephone());
         demande.setSignatureOrganisateurImageUrl(u.getSignatureImageUrl());
+
         demandeService.creer(demande);
         return "redirect:/organisateur/demandes?ok=1";
     }
@@ -65,9 +67,8 @@ public class OrganisateurController {
 
     @GetMapping("/events/{id}/edit")
     public String editEvent(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl principal, Model model) {
-        var e = evenementService.findById(id).orElseThrow();
-        // simple sécurité côté serveur
-        if (e.getOrganisateur() == null || e.getOrganisateur().getUid() != principal.getUtilisateur().getUid()) {
+        EvenementDto e = evenementService.findById(id).orElseThrow();
+        if (e.getOrganisateurUid() == null || !e.getOrganisateurUid().equals(principal.getUtilisateur().getUid())) {
             return "redirect:/organisateur/events?forbidden=1";
         }
         model.addAttribute("event", e);
@@ -75,27 +76,30 @@ public class OrganisateurController {
     }
 
     @PostMapping("/events/{id}/edit")
-    public String saveEvent(@PathVariable Long id, @ModelAttribute Evenement form,
+    public String saveEvent(@PathVariable Long id, @ModelAttribute EvenementDto form,
                             @AuthenticationPrincipal UserDetailsImpl principal) {
-        var e = evenementService.findById(id).orElseThrow();
-        if (e.getOrganisateur() == null || e.getOrganisateur().getUid() != principal.getUtilisateur().getUid()) {
+        EvenementDto e = evenementService.findById(id).orElseThrow();
+        if (e.getOrganisateurUid() == null || !e.getOrganisateurUid().equals(principal.getUtilisateur().getUid())) {
             return "redirect:/organisateur/events?forbidden=1";
         }
+
+        // mise à jour des champs
         e.setTitre(form.getTitre());
         e.setDescription(form.getDescription());
         e.setLieu(form.getLieu());
         e.setDateDebut(form.getDateDebut());
         e.setDateFin(form.getDateFin());
-        e.setCategorie(form.getCategorie());
+        e.setCategorie(form.getCategorie()); // ✅ String au lieu de categorieCid
         e.setAfficheUrl(form.getAfficheUrl());
+
         evenementService.save(e);
         return "redirect:/organisateur/events?ok=1";
     }
 
     @GetMapping("/events/{id}/participants")
     public String participants(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl principal, Model model) {
-        var e = evenementService.findById(id).orElseThrow();
-        if (e.getOrganisateur() == null || e.getOrganisateur().getUid() != principal.getUtilisateur().getUid()) {
+        EvenementDto e = evenementService.findById(id).orElseThrow();
+        if (e.getOrganisateurUid() == null || !e.getOrganisateurUid().equals(principal.getUtilisateur().getUid())) {
             return "redirect:/organisateur/events?forbidden=1";
         }
         model.addAttribute("event", e);

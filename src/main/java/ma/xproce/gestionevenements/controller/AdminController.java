@@ -2,6 +2,7 @@ package ma.xproce.gestionevenements.controller;
 
 import lombok.RequiredArgsConstructor;
 import ma.xproce.gestionevenements.dao.entities.Utilisateur;
+import ma.xproce.gestionevenements.dto.UtilisateurDto;
 import ma.xproce.gestionevenements.security.UserDetailsImpl;
 import ma.xproce.gestionevenements.service.DemandeService;
 import ma.xproce.gestionevenements.service.EvenementService;
@@ -38,11 +39,23 @@ public class AdminController {
 
     @PostMapping("/demandes/{id}/accepter")
     public String accepter(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl principal) {
-        Utilisateur validateur = principal.getUtilisateur();
+        Utilisateur validateurEntity = principal.getUtilisateur();
+
+        // Conversion en DTO
+        UtilisateurDto validateur = new UtilisateurDto(
+                validateurEntity.getUid(),
+                validateurEntity.getNom(),
+                validateurEntity.getPrenom(),
+                validateurEntity.getEmail(),
+                validateurEntity.getTelephone(),
+                validateurEntity.getRole(),
+                validateurEntity.getSignatureImageUrl(),
+                validateurEntity.getDateExpirationRole()
+        );
+
         var d = demandeService.accepter(id, validateur);
 
         // créer automatiquement l'événement (brouillon) si accepté
-        // on essaie de retrouver l'organisateur via emailOrganisateur
         utilisateurService.findByEmail(d.getEmailOrganisateur())
                 .ifPresent(org -> evenementService.creerDepuisDemandeAcceptee(d, org));
 
@@ -51,7 +64,12 @@ public class AdminController {
 
     @PostMapping("/demandes/{id}/refuser")
     public String refuser(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl principal) {
-        demandeService.refuser(id, principal.getUtilisateur());
+        Utilisateur u = principal.getUtilisateur();
+        UtilisateurDto validateur = new UtilisateurDto(
+                u.getUid(), u.getNom(), u.getPrenom(), u.getEmail(),
+                u.getTelephone(), u.getRole(), u.getSignatureImageUrl(), u.getDateExpirationRole()
+        );
+        demandeService.refuser(id, validateur);
         return "redirect:/admin/demandes?ok=1";
     }
 
@@ -72,7 +90,14 @@ public class AdminController {
                            @RequestParam String reponse,
                            @AuthenticationPrincipal UserDetailsImpl principal) {
         var q = questionService.findById(qid).orElseThrow();
-        questionService.repondre(qid, reponse, principal.getUtilisateur());
-        return "redirect:/events/" + q.getEvenement().getEid() + "?okReponse=1";
+
+        Utilisateur u = principal.getUtilisateur();
+        UtilisateurDto repondeur = new UtilisateurDto(
+                u.getUid(), u.getNom(), u.getPrenom(), u.getEmail(),
+                u.getTelephone(), u.getRole(), u.getSignatureImageUrl(), u.getDateExpirationRole()
+        );
+
+        questionService.repondre(qid, reponse, repondeur);
+        return "redirect:/events/" + q.getEvenementEid() + "?okReponse=1";
     }
 }
