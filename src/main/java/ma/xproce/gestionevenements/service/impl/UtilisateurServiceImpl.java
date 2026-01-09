@@ -2,8 +2,9 @@ package ma.xproce.gestionevenements.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import ma.xproce.gestionevenements.dao.entities.Utilisateur;
-import ma.xproce.gestionevenements.dao.repository.UtilisateurRepository;
+import ma.xproce.gestionevenements.dao.repositories.UtilisateurRepository;
 import ma.xproce.gestionevenements.service.UtilisateurService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UtilisateurServiceImpl implements UtilisateurService {
-    private final UtilisateurRepository utilisateurRepository;
+    @Autowired
+    UtilisateurRepository utilisateurRepository;
 
     @Override
     public Optional<Utilisateur> findByEmail(String email) {

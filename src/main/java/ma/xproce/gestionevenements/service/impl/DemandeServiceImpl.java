@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import ma.xproce.gestionevenements.dao.entities.Demande;
 import ma.xproce.gestionevenements.dao.entities.Status;
 import ma.xproce.gestionevenements.dao.entities.Utilisateur;
-import ma.xproce.gestionevenements.dao.repository.DemandeRepository;
+import ma.xproce.gestionevenements.dao.repositories.DemandeRepository;
 import ma.xproce.gestionevenements.service.DemandeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class DemandeServiceImpl implements DemandeService {
-    private final DemandeRepository demandeRepository;
+
+    @Autowired
+    DemandeRepository demandeRepository;
 
     @Override
     public Demande creer(Demande demande) {

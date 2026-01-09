@@ -6,6 +6,7 @@ import ma.xproce.gestionevenements.dao.entities.Question;
 import ma.xproce.gestionevenements.service.EvenementService;
 import ma.xproce.gestionevenements.service.ParticipantService;
 import ma.xproce.gestionevenements.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/events")
 public class PublicEventController {
 
-    private final EvenementService evenementService;
-    private final ParticipantService participantService;
-    private final QuestionService questionService;
+    @Autowired
+    EvenementService evenementService;
+    @Autowired
+    ParticipantService participantService;
+    @Autowired
+    QuestionService questionService;
 
     @GetMapping
     public String list(Model model) {

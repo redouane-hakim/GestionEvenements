@@ -3,8 +3,9 @@ package ma.xproce.gestionevenements.service.impl;
 import lombok.RequiredArgsConstructor;
 import ma.xproce.gestionevenements.dao.entities.Question;
 import ma.xproce.gestionevenements.dao.entities.Utilisateur;
-import ma.xproce.gestionevenements.dao.repository.QuestionRepository;
+import ma.xproce.gestionevenements.dao.repositories.QuestionRepository;
 import ma.xproce.gestionevenements.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
-    private final QuestionRepository questionRepository;
+
+    @Autowired
+    QuestionRepository questionRepository;
 
     @Override
     public Question save(Question q) {

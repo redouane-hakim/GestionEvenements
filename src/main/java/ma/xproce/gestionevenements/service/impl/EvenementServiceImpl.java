@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import ma.xproce.gestionevenements.dao.entities.Demande;
 import ma.xproce.gestionevenements.dao.entities.Evenement;
 import ma.xproce.gestionevenements.dao.entities.Utilisateur;
-import ma.xproce.gestionevenements.dao.repository.EvenementRepository;
+import ma.xproce.gestionevenements.dao.repositories.EvenementRepository;
 import ma.xproce.gestionevenements.service.EvenementService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class EvenementServiceImpl implements EvenementService {
-    private final EvenementRepository evenementRepository;
+
+    @Autowired
+    EvenementRepository evenementRepository;
 
     @Override
     public List<Evenement> findAll() {
@@ -45,7 +48,7 @@ public class EvenementServiceImpl implements EvenementService {
         e.setDescription(d.getDescription());
         e.setOrganisateur(organisateur);
         e.setDemande(d);
-        // le reste sera complété par l'organisateur après acceptation
+
         return evenementRepository.save(e);
     }
 

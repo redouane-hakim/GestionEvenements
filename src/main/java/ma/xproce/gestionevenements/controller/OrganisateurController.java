@@ -7,20 +7,30 @@ import ma.xproce.gestionevenements.dao.entities.Utilisateur;
 import ma.xproce.gestionevenements.security.UserDetailsImpl;
 import ma.xproce.gestionevenements.service.DemandeService;
 import ma.xproce.gestionevenements.service.EvenementService;
+import ma.xproce.gestionevenements.service.FileStorageService;
 import ma.xproce.gestionevenements.service.ParticipantService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/organisateur")
 public class OrganisateurController {
 
-    private final DemandeService demandeService;
+    @Autowired
+    DemandeService demandeService;
+    @Autowired
     private final EvenementService evenementService;
+    @Autowired
     private final ParticipantService participantService;
+    @Autowired
+    FileStorageService fileStorageService;
 
     @GetMapping
     public String dashboard(@AuthenticationPrincipal UserDetailsImpl principal, Model model) {
@@ -39,7 +49,7 @@ public class OrganisateurController {
     @PostMapping("/demande")
     public String submitDemande(@ModelAttribute Demande demande, @AuthenticationPrincipal UserDetailsImpl principal) {
         Utilisateur u = principal.getUtilisateur();
-        // remplir infos organisateur depuis le compte connecté (traçabilité)
+
         demande.setNomOrganisateur(u.getNom());
         demande.setPrenomOrganisateur(u.getPrenom());
         demande.setEmailOrganisateur(u.getEmail());
@@ -67,7 +77,7 @@ public class OrganisateurController {
     public String editEvent(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl principal, Model model) {
         var e = evenementService.findById(id).orElseThrow();
         // simple sécurité côté serveur
-        if (e.getOrganisateur() == null || e.getOrganisateur().getUid() != principal.getUtilisateur().getUid()) {
+        if (e.getOrganisateur() == null || !e.getOrganisateur().getUid().equals(principal.getUtilisateur().getUid())) {
             return "redirect:/organisateur/events?forbidden=1";
         }
         model.addAttribute("event", e);
@@ -75,27 +85,40 @@ public class OrganisateurController {
     }
 
     @PostMapping("/events/{id}/edit")
-    public String saveEvent(@PathVariable Long id, @ModelAttribute Evenement form,
-                            @AuthenticationPrincipal UserDetailsImpl principal) {
+    public String saveEvent(@PathVariable Long id,
+                            @ModelAttribute Evenement form,
+                            @RequestParam(value = "afficheFile", required = false) MultipartFile afficheFile,
+                            @AuthenticationPrincipal UserDetailsImpl principal) throws IOException {
+
         var e = evenementService.findById(id).orElseThrow();
-        if (e.getOrganisateur() == null || e.getOrganisateur().getUid() != principal.getUtilisateur().getUid()) {
+
+
+        if (e.getOrganisateur() == null ||
+                !e.getOrganisateur().getUid().equals(principal.getUtilisateur().getUid())) {
             return "redirect:/organisateur/events?forbidden=1";
         }
+
         e.setTitre(form.getTitre());
         e.setDescription(form.getDescription());
         e.setLieu(form.getLieu());
         e.setDateDebut(form.getDateDebut());
         e.setDateFin(form.getDateFin());
         e.setCategorie(form.getCategorie());
-        e.setAfficheUrl(form.getAfficheUrl());
+
+        if (afficheFile != null && !afficheFile.isEmpty()) {
+            String url = fileStorageService.storeImage(afficheFile);
+            e.setAfficheUrl(url);
+        }
+
         evenementService.save(e);
         return "redirect:/organisateur/events?ok=1";
     }
 
+
     @GetMapping("/events/{id}/participants")
     public String participants(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl principal, Model model) {
         var e = evenementService.findById(id).orElseThrow();
-        if (e.getOrganisateur() == null || e.getOrganisateur().getUid() != principal.getUtilisateur().getUid()) {
+        if (e.getOrganisateur() == null || !e.getOrganisateur().getUid().equals(principal.getUtilisateur().getUid())) {
             return "redirect:/organisateur/events?forbidden=1";
         }
         model.addAttribute("event", e);

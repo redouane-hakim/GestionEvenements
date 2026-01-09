@@ -1,7 +1,7 @@
 package ma.xproce.gestionevenements.security;
 
 import lombok.RequiredArgsConstructor;
-import ma.xproce.gestionevenements.dao.repository.UtilisateurRepository;
+import ma.xproce.gestionevenements.dao.repositories.UtilisateurRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

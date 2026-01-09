@@ -7,6 +7,7 @@ import ma.xproce.gestionevenements.service.DemandeService;
 import ma.xproce.gestionevenements.service.EvenementService;
 import ma.xproce.gestionevenements.service.QuestionService;
 import ma.xproce.gestionevenements.service.UtilisateurService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final DemandeService demandeService;
-    private final EvenementService evenementService;
-    private final UtilisateurService utilisateurService;
-    private final QuestionService questionService;
+    @Autowired
+    DemandeService demandeService;
+    @Autowired
+    EvenementService evenementService;
+    @Autowired
+    UtilisateurService utilisateurService;
+    @Autowired
+    QuestionService questionService;
 
     @GetMapping
     public String dashboard(Model model) {
@@ -41,8 +46,7 @@ public class AdminController {
         Utilisateur validateur = principal.getUtilisateur();
         var d = demandeService.accepter(id, validateur);
 
-        // créer automatiquement l'événement (brouillon) si accepté
-        // on essaie de retrouver l'organisateur via emailOrganisateur
+
         utilisateurService.findByEmail(d.getEmailOrganisateur())
                 .ifPresent(org -> evenementService.creerDepuisDemandeAcceptee(d, org));
 

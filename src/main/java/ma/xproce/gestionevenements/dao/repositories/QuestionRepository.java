@@ -1,4 +1,4 @@
-package ma.xproce.gestionevenements.dao.repository;
+package ma.xproce.gestionevenements.dao.repositories;
 
 import ma.xproce.gestionevenements.dao.entities.Question;
 import org.springframework.data.jpa.repository.JpaRepository;

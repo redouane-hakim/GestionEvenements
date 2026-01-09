@@ -32,10 +32,8 @@ public class Evenement {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateFin;
 
-    /** catégorie libre (selon vos besoins) */
     private String categorie;
 
-    @Column(unique = true)
     private String afficheUrl;
 
     @ManyToOne

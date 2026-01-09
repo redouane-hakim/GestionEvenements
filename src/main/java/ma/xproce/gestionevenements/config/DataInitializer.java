@@ -2,9 +2,9 @@ package ma.xproce.gestionevenements.config;
 
 import lombok.RequiredArgsConstructor;
 import ma.xproce.gestionevenements.dao.entities.*;
-import ma.xproce.gestionevenements.dao.repository.DemandeRepository;
-import ma.xproce.gestionevenements.dao.repository.EvenementRepository;
-import ma.xproce.gestionevenements.dao.repository.UtilisateurRepository;
+import ma.xproce.gestionevenements.dao.repositories.DemandeRepository;
+import ma.xproce.gestionevenements.dao.repositories.EvenementRepository;
+import ma.xproce.gestionevenements.dao.repositories.UtilisateurRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

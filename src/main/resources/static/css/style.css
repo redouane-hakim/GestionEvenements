@@ -5,7 +5,14 @@
 
 body{
   background: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
+
+html{
+  height: 100%;}
 
 .btn-scale{
   transition: transform .15s ease, box-shadow .15s ease;
