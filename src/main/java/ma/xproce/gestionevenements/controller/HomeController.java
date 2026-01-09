@@ -20,4 +20,9 @@ public class HomeController {
         model.addAttribute("moreEvents", evenementService.findAll().stream().limit(6).toList());
         return "home";
     }
+
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
 }
